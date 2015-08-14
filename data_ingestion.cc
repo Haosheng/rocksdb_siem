@@ -40,7 +40,7 @@ uint32_t GetTimeBucket(ts_t timestamp){
 	std::time_t cur_time = std::time(0);
 	uint32_t gap = cur_time - (uint32_t)timestamp;
 	if(gap >= TIME_INTERVAL){
-		return (rand()%36)+1;
+		return 38;
 	}
 	uint32_t bucket_num = (gap/600)+1;
 	return bucket_num;
@@ -76,7 +76,6 @@ int main(int argc, char* argv[]){
 	options.comparator = &cmp;
 	//options.statistics = CreateDBStatistics();
 
-	int count = 0;
 
 	while(getline(file,read_line)){
 		//get key sub fields
@@ -115,10 +114,7 @@ int main(int argc, char* argv[]){
 		if(column_id > 36){
 			continue;
 		}
-		count++;
-		if(count%100==0){
-			cpcode+=count/100;
-		}
+		
 		/*get a DB pointer for the cpcode*/
 
 		//create and open a DB for a new cpcode
