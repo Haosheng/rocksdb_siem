@@ -120,7 +120,7 @@ int main(int argc, char* argv[]){
 		//create and open a DB for a new cpcode
 		if(opening_db.find(cpcode) == opening_db.end()){
 			//create a new DB
-			   DB* db;
+			  DB* db;
 			  Status s = DB::Open(options, kDBdir+std::to_string(cpcode), &db);
 			  if(!s.ok()) std::cout<<s.ToString()<<std::endl;
 			  assert(s.ok());
@@ -135,25 +135,7 @@ int main(int argc, char* argv[]){
 			    s = db->CreateColumnFamily(cfoptions, std::to_string(i), &cfs[i-1]);
 			    //assert(s.ok());
 			  }
-
-			   // close DB
-			   delete db;
-			// open DB with 37 column families
-			  std::vector<ColumnFamilyDescriptor> column_families;
-			  // have to open default column family
-			  column_families.push_back(ColumnFamilyDescriptor(
-			      kDefaultColumnFamilyName, cfoptions));
-			  // open the new one, too
-			  for(int i=1;i<37;i++){
-			  	column_families.push_back(ColumnFamilyDescriptor(
-			      std::to_string(i), cfoptions));
-			  }
-			  std::vector<ColumnFamilyHandle*> handles;
-			  DBOptions db_options(options);
-			  s = DB::Open(db_options, kDBdir+std::to_string(cpcode), column_families, &handles, &db);
-			  if(!s.ok()) std::cout<<s.ToString()<<std::endl;
-			  //assert(s.ok());
-			  db_cfhandlers[cpcode] = handles;
+			  db_cfhandlers[cpcode] = cfs;
 			  opening_db[cpcode]= db;
 		} //end of db initialization
 
