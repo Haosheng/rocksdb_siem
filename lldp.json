@@ -1,0 +1,10 @@
+{
+	"Config":{
+		"DatabasePath":"/scratch/database/",
+		"LogTTL":"21600",
+		"TimeBucketSize":"600"
+	},
+	"RocksDB_options":{
+
+	}
+}
